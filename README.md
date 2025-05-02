@@ -39,6 +39,61 @@ This system allows users to manage product inventory using barcode scanning tech
 - **Suppliers**: Store supplier details
 - **Product_Suppliers**: Link products to suppliers (many-to-many)
 
+## Implemented Use Cases
+
+1. **User Authentication**
+   - Login with username/password
+   - Role-based access control (admin, manager, staff)
+   - User session management
+
+2. **Product Management**
+   - Add new products with barcode, name, price, category
+   - Update existing product information
+   - Delete products (with cascade deletion of related records)
+   - Search products by barcode, name, or category
+
+3. **Inventory Management**
+   - Check in products to warehouses with quantity tracking
+   - Check out products from warehouses with quantity validation
+   - Transfer products between warehouses
+   - Set and update minimum stock levels for restock alerts
+
+4. **Barcode Scanning**
+   - Scan product barcodes for identification (compatible with BCST-23 scanner)
+   - Batch scanning mode for adding multiple products
+   - Scan-to-check-in process for warehouse receiving
+
+5. **Reporting**
+   - Generate inventory reports by warehouse
+   - Generate transaction history with date range filtering
+   - Generate low stock alerts based on minimum levels
+   - Export reports for review
+
+6. **Transaction Tracking**
+   - Record all inventory movements with timestamps
+   - Track user responsible for each transaction
+   - Include optional notes for transactions
+   - Support different transaction types (check-in, check-out, transfer)
+
+## Sample Data
+
+The system includes a data generation script (`generate_sample_data.py`) that populates the database with:
+
+- **Users**: 5 users (1 admin, 1 manager, 3 staff)
+- **Categories**: 10 product categories
+- **Warehouses**: 5 warehouses with different locations
+- **Suppliers**: 10 suppliers with contact information
+- **Products**: 100 products with random names, barcodes, and prices
+- **Inventory**: Approximately 300 inventory records distributed across warehouses
+- **Transactions**: 1000 random transactions (check-ins and check-outs)
+
+This provides sufficient data to demonstrate all system functionality, test reporting capabilities, and evaluate performance with realistic data volumes.
+
+## Project Contribution
+
+This project was developed individually by Fabian de Moraes as a submission for CODE University's Relational Databases module.
+
+
 ## Installation
 
 ### Prerequisites
