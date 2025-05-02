@@ -28,7 +28,6 @@ class ScanCommands:
         
         try:
             while True:
-                # Step 1: Scan barcode
                 print("\nScanning new product:")
                 barcode = read_barcode_from_scanner("Scan barcode: ")
                 
@@ -97,7 +96,7 @@ class ScanCommands:
                     
                     continue
                 
-                # Step 2: Enter product details
+                # Enter product details
                 try:
                     name = input("Product name: ")
                     if not name:
@@ -123,7 +122,7 @@ class ScanCommands:
                     
                     description = input("Description (optional): ")
                     
-                    # Step 3: Create the product
+                    # Create the product
                     product = self.product_service.create_product(
                         barcode=barcode,
                         name=name,

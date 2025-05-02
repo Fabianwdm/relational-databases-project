@@ -4,18 +4,6 @@ import csv
 from datetime import datetime
 
 def validate_barcode(barcode):
-    """
-    Validates barcode format.
-    Supports common formats like:
-    - UPC-A (12 digits)
-    - EAN-13 (13 digits)
-    - CODE-128 (variable length alphanumeric)
-    - Custom format (BCD-XXXXXX)
-    
-    Returns:
-    - (True, None) if valid
-    - (False, error_message) if invalid
-    """
     # If empty
     if not barcode:
         return False, "Barcode cannot be empty"
@@ -39,12 +27,7 @@ def validate_barcode(barcode):
     return False, "Invalid barcode format"
 
 def process_barcode_input(input_string):
-    """
-    Process barcode input which might contain extra characters from scanner
-    Often barcode scanners add prefix/suffix characters or special keys
-    
-    Returns cleaned barcode string
-    """
+
     # Strip whitespace
     input_string = input_string.strip()
     
@@ -58,14 +41,6 @@ def process_barcode_input(input_string):
     return input_string
 
 def import_barcodes_from_csv(csv_path):
-    """
-    Import multiple barcodes from a CSV file
-    Expected format: barcode,quantity
-    
-    Returns:
-    - List of (barcode, quantity) tuples
-    - Error message if file can't be processed
-    """
     if not os.path.exists(csv_path):
         return None, f"File not found: {csv_path}"
     
@@ -119,16 +94,6 @@ def import_barcodes_from_csv(csv_path):
         return None, f"Error processing CSV: {str(e)}"
 
 def export_barcodes_to_csv(barcodes, csv_path):
-    """
-    Export barcodes to a CSV file
-    
-    barcodes: List of (barcode, product_name, quantity) tuples
-    csv_path: Path to save the CSV file
-    
-    Returns:
-    - True if successful
-    - False if an error occurred
-    """
     try:
         with open(csv_path, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
@@ -151,16 +116,7 @@ def export_barcodes_to_csv(barcodes, csv_path):
         return False
 
 def read_barcode_from_scanner(prompt="Scan barcode: "):
-    """
-    Read barcode input from scanner or manual entry
-    
-    Since barcode scanners usually act as keyboard input devices,
-    this function simply reads from standard input but adds some
-    processing to handle scanner-specific behavior.
-    
-    Returns:
-    - Processed barcode string
-    """
+
     try:
         user_input = input(prompt)
         return process_barcode_input(user_input)
@@ -169,12 +125,7 @@ def read_barcode_from_scanner(prompt="Scan barcode: "):
         return None
 
 def batch_scan_mode():
-    """
-    Enter batch scanning mode to process multiple barcodes
-    
-    Returns:
-    - List of (barcode, quantity) tuples
-    """
+
     print("\n=== Batch Scanning Mode ===")
     print("Enter barcodes followed by quantities.")
     print("Leave barcode empty to finish.")

@@ -4,7 +4,6 @@ from ..repositories import InventoryRepository, ProductRepository, TransactionRe
 from ..models import Inventory, Transaction
 
 class InventoryService:
-    """Service class for inventory-related operations"""
     
     def __init__(self, session):
         self.inventory_repo = InventoryRepository(session)
@@ -13,7 +12,6 @@ class InventoryService:
         self.session = session
     
     def check_in(self, barcode, warehouse_id, quantity, user_id, notes=None):
-        """Check in products to a warehouse"""
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero")
         
@@ -65,7 +63,6 @@ class InventoryService:
             raise e
     
     def check_out(self, barcode, warehouse_id, quantity, user_id, notes=None):
-        """Check out products from a warehouse"""
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero")
         
@@ -113,7 +110,6 @@ class InventoryService:
             raise e
     
     def transfer(self, barcode, from_warehouse_id, to_warehouse_id, quantity, user_id, notes=None):
-        """Transfer products between warehouses"""
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero")
         
@@ -194,15 +190,12 @@ class InventoryService:
             raise e
     
     def get_warehouse_inventory(self, warehouse_id):
-        """Get all inventory items in a specific warehouse"""
         return self.inventory_repo.get_warehouse_inventory(warehouse_id)
     
     def get_low_stock_items(self, threshold=None):
-        """Get items where quantity is below minimum_stock or optional threshold"""
         return self.inventory_repo.get_low_stock_items(threshold)
     
     def update_minimum_stock(self, product_id, warehouse_id, minimum_stock):
-        """Update minimum stock level for an inventory item"""
         inventory_item = self.inventory_repo.get_by_product_warehouse(product_id, warehouse_id)
         if not inventory_item:
             raise ValueError("Inventory item not found")

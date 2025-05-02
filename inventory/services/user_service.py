@@ -3,15 +3,12 @@ import os
 from ..repositories import BaseRepository
 from ..models import User
 
-class UserService:
-    """Service class for user management"""
-    
+class UserService:    
     def __init__(self, session):
         self.user_repo = BaseRepository(session, User)
         self.session = session
     
     def _hash_password(self, password, salt=None):
-        """Hash password with salt"""
         if salt is None:
             salt = os.urandom(32)  # Generate new salt if none provided
             
@@ -27,7 +24,6 @@ class UserService:
         return salt.hex() + hash_obj.hex(), salt
     
     def _verify_password(self, stored_hash, password):
-        """Verify a password against a stored hash"""
         # Extract salt from stored hash (first 64 chars = 32 bytes as hex)
         salt = bytes.fromhex(stored_hash[:64])
         
@@ -38,7 +34,6 @@ class UserService:
         return new_hash == stored_hash
     
     def authenticate(self, username, password):
-        """Authenticate a user by username and password"""
         users = self.user_repo.get_by_filter(username=username)
         
         if not users:
@@ -55,7 +50,6 @@ class UserService:
         return None
         
     def create_user(self, username, password, email=None, role='staff'):
-        """Create a new user"""
         # Check if username already exists
         if self.user_repo.get_by_filter(username=username):
             raise ValueError(f"Username '{username}' already exists")
@@ -72,7 +66,6 @@ class UserService:
         )
     
     def update_user(self, user_id, **kwargs):
-        """Update user information"""
         # Handle password update separately
         if 'password' in kwargs:
             password_hash, _ = self._hash_password(kwargs['password'])
@@ -82,13 +75,10 @@ class UserService:
         return self.user_repo.update(user_id, **kwargs)
     
     def get_all_users(self):
-        """Get all users"""
         return self.user_repo.get_all()
     
     def get_user_by_id(self, user_id):
-        """Get a user by ID"""
         return self.user_repo.get_by_id(user_id)
     
     def delete_user(self, user_id):
-        """Delete a user"""
         return self.user_repo.delete(user_id)

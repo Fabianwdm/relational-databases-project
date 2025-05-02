@@ -3,7 +3,6 @@ from ..repositories import InventoryRepository, TransactionRepository, ProductRe
 from tabulate import tabulate
 
 class ReportService:
-    """Service class for generating reports"""
     
     def __init__(self, session):
         self.inventory_repo = InventoryRepository(session)
@@ -12,7 +11,6 @@ class ReportService:
         self.session = session
     
     def generate_inventory_report(self, warehouse_id=None):
-        """Generate a report of current inventory levels"""
         report_data = []
         
         if warehouse_id:
@@ -58,7 +56,6 @@ class ReportService:
             return report_title, "No inventory data found."
     
     def generate_transaction_report(self, start_date=None, end_date=None, product_id=None, warehouse_id=None):
-        """Generate a report of transactions with optional filters"""
         report_data = []
         
         # Set default date range to last 30 days if not specified
@@ -95,7 +92,6 @@ class ReportService:
             return report_title, "No transaction data found for the specified criteria."
     
     def generate_low_stock_report(self, threshold=None):
-        """Generate a report of items with low stock"""
         low_stock_items = self.inventory_repo.get_low_stock_items(threshold)
         report_data = []
         
