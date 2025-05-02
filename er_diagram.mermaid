@@ -1,0 +1,80 @@
+erDiagram
+    PRODUCTS {
+        int product_id PK
+        string barcode UK
+        string name
+        string description
+        int category_id FK
+        float price
+        datetime created_at
+        datetime updated_at
+    }
+    
+    CATEGORIES {
+        int category_id PK
+        string name
+        string description
+    }
+    
+    WAREHOUSES {
+        int warehouse_id PK
+        string name
+        string location
+        int capacity
+        string status
+    }
+    
+    INVENTORY {
+        int inventory_id PK
+        int product_id FK
+        int warehouse_id FK
+        float quantity
+        float minimum_stock
+        datetime last_checked
+    }
+    
+    TRANSACTIONS {
+        int transaction_id PK
+        int product_id FK
+        int warehouse_id FK
+        int user_id FK
+        float quantity
+        string transaction_type
+        datetime timestamp
+        string notes
+    }
+    
+    USERS {
+        int user_id PK
+        string username UK
+        string password_hash
+        string email
+        string role
+        datetime last_login
+    }
+    
+    SUPPLIERS {
+        int supplier_id PK
+        string name
+        string contact_person
+        string email
+        string phone
+        string address
+    }
+    
+    PRODUCT_SUPPLIERS {
+        int product_supplier_id PK
+        int product_id FK
+        int supplier_id FK
+        int lead_time
+        float price
+    }
+    
+    CATEGORIES ||--o{ PRODUCTS : "categorizes"
+    PRODUCTS ||--o{ INVENTORY : "stored in"
+    WAREHOUSES ||--o{ INVENTORY : "contains"
+    PRODUCTS ||--o{ TRANSACTIONS : "involved in"
+    WAREHOUSES ||--o{ TRANSACTIONS : "location of"
+    USERS ||--o{ TRANSACTIONS : "performed by"
+    PRODUCTS ||--o{ PRODUCT_SUPPLIERS : "supplied by"
+    SUPPLIERS ||--o{ PRODUCT_SUPPLIERS : "supplies"
